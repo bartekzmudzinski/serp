@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+  <form method="post" action="/" novalidate>
+    {% csrf_token %}
+    <div class="row align-items-end justify-content-between">
+      <div class="col-7">
+        {{ form.query|as_crispy_field }}
+      </div>
+      <div class="col-3">
+        {{ form.user_agent|as_crispy_field }}
+      </div>
+      <div class="col-2">
+        <button type="submit" class="btn btn-success" style="margin-bottom: 1rem;">Search</button>
+      </div>
+    </div>
+  </form>
+
+  {% if object %}
+  <div>
+    <h4>Liczba wyników: <span class="badge badge-secondary">{{ object.results }}</span></h4>
+    <div style="margin-bottom: 1rem;">
+      <h6>Najpopularniejsze słowa:
+      {% for word in object.most_common_words %}
+        <span class="badge badge-dark">{{ word }}</span>
+      {% endfor %}
+      </h6>
+    </div>
+    {% for result in object.search_results.all %}
+      <div class="card" style="margin-bottom: 1rem;">
+        <div class="card-body">
+          <a href="{{ result.link }}">
+            <h5 class="card-title">{{ result.title }}</h5>
+          </a>
+          <p class="card-text">{{ result.description }}</p>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+{% endif %}
+{% endblock %}

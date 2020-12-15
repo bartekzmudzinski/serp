@@ -1,0 +1,13 @@
+.idea
+.vscode/
+Pipfile
+Pipfile.lock
+
+# Byte-compiled
+__pycache__/
+*.py[cod]
+*$py.class
+
+# System Files
+.DS_Store
+Thumbs.db
